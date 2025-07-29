@@ -1,0 +1,12 @@
+@import "bootstrap";
+
+body,
+#root {
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

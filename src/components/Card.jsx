@@ -24,7 +24,7 @@ export default function Card({ result }) {
             <div>
               <p className="card-text">
                 <small className="text-muted">
-                  Vote: {result.vote_average}
+                  Vote: {Math.floor(((result.vote_average - 1) / 9) * 4 + 1)}
                   {result.original_language && (
                     <>
                       {" | Language: "}

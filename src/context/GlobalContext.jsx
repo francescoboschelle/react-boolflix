@@ -3,10 +3,10 @@ import { createContext, useState } from "react";
 const GlobalContext = createContext();
 
 function GlobalProvider({ children }) {
-  const [movies, setMovies] = useState([]);
+  const [results, setResults] = useState([]);
 
   return (
-    <GlobalContext.Provider value={{ movies, setMovies }}>
+    <GlobalContext.Provider value={{ results, setResults }}>
       {children}
     </GlobalContext.Provider>
   );

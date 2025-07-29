@@ -4,23 +4,26 @@ import useGlobalContext from "../context/useGlobalContext.jsx";
 
 export default function Header() {
   const [queryString, setQueryString] = useState("");
-  const { setMovies } = useGlobalContext();
+  const { setResults } = useGlobalContext();
 
   function handleSearch(e) {
     e.preventDefault();
 
     axios
       .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${
+        `https://api.themoviedb.org/3/search/multi?api_key=${
           import.meta.env.VITE_API_KEY
         }&query=${queryString}`
       )
       .then((response) => {
-        if (response.data.results.length === 0) {
-          setMovies([]);
-          return;
+        if (response.data.results.length > 0) {
+          response.data.results.forEach((result) => {
+            if (result.original_language && result.original_language === "ja") {
+              result.original_language = "jp";
+            }
+          });
+          setResults(response.data.results);
         }
-        setMovies(response.data.results);
       });
   }
 

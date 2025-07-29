@@ -1,7 +1,7 @@
 export default function Card({ movie }) {
   return (
     <div className="col-md-4 mb-4 d-flex">
-      <div className="card">
+      <div className="card w-100">
         {movie.poster_path ? (
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

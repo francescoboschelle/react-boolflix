@@ -16,6 +16,10 @@ export default function Header() {
         }&query=${queryString}`
       )
       .then((response) => {
+        if (response.data.results.length === 0) {
+          setMovies([]);
+          return;
+        }
         setMovies(response.data.results);
       });
   }
@@ -25,7 +29,7 @@ export default function Header() {
       <nav className="navbar navbar-expand-sm navbar-light bg-light">
         <div className="container">
           <a className="navbar-brand" href="#">
-            Navbar
+            BoolFlix
           </a>
           <button
             className="navbar-toggler d-lg-none"
@@ -45,31 +49,6 @@ export default function Header() {
                   Home
                   <span className="visually-hidden">(current)</span>
                 </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  id="dropdownId"
-                  data-bs-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Dropdown
-                </a>
-                <div className="dropdown-menu" aria-labelledby="dropdownId">
-                  <a className="dropdown-item" href="#">
-                    Action 1
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Action 2
-                  </a>
-                </div>
               </li>
             </ul>
             <form className="d-flex my-2 my-lg-0" onSubmit={handleSearch}>

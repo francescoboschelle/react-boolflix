@@ -5,10 +5,13 @@ import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 
 export default function Card({ result }) {
   function getVoteStars(voteAverage) {
-    const scaled = Math.floor(((voteAverage - 1) / 9) * 4 + 1);
+    const scaled = Math.ceil(voteAverage / 2);
     const stars = [];
+
     for (let i = 1; i <= 5; i++) {
-      if (i <= scaled) {
+      if (scaled < 1) {
+        stars.push(<FontAwesomeIcon icon={faStarEmpty} />);
+      } else if (i <= scaled) {
         stars.push(<FontAwesomeIcon icon={faStarSolid} />);
       } else {
         stars.push(<FontAwesomeIcon icon={faStarEmpty} />);
@@ -19,16 +22,16 @@ export default function Card({ result }) {
   }
 
   return (
-    <div className="col-md-4 mb-4 d-flex">
-      <div className="card w-100">
-        {result.poster_path && (
-          <img
-            src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-            className="card-img-top"
-            alt={result.title}
-          />
-        )}
-        <div className="card-body d-flex flex-column justify-content-between">
+    <div className="col-4 col-sm-2 mb-4 d-flex">
+      <div className="card w-100 border-0 bg-transparent">
+        <img
+          src={`https://image.tmdb.org/t/p/w500${
+            result.poster_path || result.backdrop_path
+          }`}
+          className="h-100 opacity-1 z-2 card-img"
+          alt={result.title}
+        />
+        <div className="card-body d-flex flex-column justify-content-between position-absolute top-0 start-0 text-white w-100 h-100 z-1">
           <div>
             <h5 className="card-title">{result.title || result.name}</h5>
             <p className="card-text">{result.overview}</p>
@@ -36,10 +39,11 @@ export default function Card({ result }) {
           {(result.vote_average || result.release_date) && (
             <div>
               <p className="card-text">
-                <small className="text-muted">
-                  {result.vote_average && (
-                    <>Vote: {getVoteStars(result.vote_average)} | </>
-                  )}
+                <small className="text-gray">
+                  {result.vote_average !== undefined &&
+                    result.vote_average !== null && (
+                      <>Vote: {getVoteStars(result.vote_average)} | </>
+                    )}
                   {result.original_language && (
                     <>
                       {"Language: "}
